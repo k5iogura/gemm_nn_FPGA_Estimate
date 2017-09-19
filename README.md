@@ -13,3 +13,14 @@ Makefile.arm:to compile gemm1.cpp for SoC(ARM) in FPGA
   aoc --list-boards  
   echo 'type to compile opencl: aoc gemm1.cl --board de0_nano_sharedonly_with_spi_tft'  
   
+  *Steps*  
+  aoc gemm1.cl --board ...*On Windows*    
+  *Copy top.rbf onto SoC(ARM) linux*  
+  mount /dev/mmcblk0p1 /mnt/p1 *On SoC(ARM) linux,*   
+  cp top.rbf /mnt/p1/soc_system.rbf  
+  reboot  
+  make -f Makefile.arm *On Windows*  
+  *Copy gemm1.arm and gemm1.aocx onto SoC(ARM) linux*   
+  chmod +x gemm1.arm  
+  ./gemm1.arm  
+
