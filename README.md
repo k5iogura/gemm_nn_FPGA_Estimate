@@ -2,7 +2,7 @@
 # Simply c++ main program to use OpenCL I/F to invoke Kernel on Altera FPGA(DE0Nano).  
 # And, GEMM_nn OpenCL kernel code from src/gemm.c Darknet.   
 
-1.Makefiles
+1.Makefiles  
 Makefile.x86:to compile gemm1.cpp for Windows  
 Makefile.arm:to compile gemm1.cpp for SoC(ARM) in FPGA  
 2.gemm1.cpp  
