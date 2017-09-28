@@ -1,0 +1,23 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+MAX_SOURCE_SIZE	gemm_fpga.c	14;"	d	file:
+MEM_SIZE	gemm_fpga.c	13;"	d	file:
+__USE_MINGW_ANSI_STDIO	gemm_fpga.c	1;"	d	file:
+command_queue	gemm_fpga.c	/^static cl_command_queue command_queue = NULL;$/;"	v	file:
+context	gemm_fpga.c	/^static cl_context context = NULL;$/;"	v	file:
+device_id	gemm_fpga.c	/^static cl_device_id device_id = NULL;$/;"	v	file:
+gemm_fpga_finalize	gemm_fpga.c	/^void gemm_fpga_finalize(){$/;"	f
+gemm_fpga_init	gemm_fpga.c	/^int gemm_fpga_init () {$/;"	f
+gemm_nn	gemm_fpga.c	/^void gemm_nn(int M, int N, int K, float ALPHA, $/;"	f
+gemm_nn_fpga	gemm_fpga.c	/^void gemm_nn_fpga(int M, int N, int K, float ALPHA, $/;"	f
+kernel	gemm_fpga.c	/^static cl_kernel kernel = NULL;$/;"	v	file:
+main	main.c	/^int main(){$/;"	f
+memobjA	gemm_fpga.c	/^static cl_mem memobjA = NULL;$/;"	v	file:
+memobjB	gemm_fpga.c	/^static cl_mem memobjB = NULL;$/;"	v	file:
+memobjC	gemm_fpga.c	/^static cl_mem memobjC = NULL;$/;"	v	file:
+platform_id	gemm_fpga.c	/^static cl_platform_id platform_id = NULL;$/;"	v	file:
+program	gemm_fpga.c	/^static cl_program program = NULL;$/;"	v	file:
