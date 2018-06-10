@@ -24,3 +24,8 @@ Makefile.arm:to compile gemm1.cpp for SoC(ARM) in FPGA
   chmod +x gemm1.arm  
   ./gemm1.arm  
 
+#For emulator  
+source src.opencl.emu  
+make -f Makefile.emu  
+./gemm  
+
