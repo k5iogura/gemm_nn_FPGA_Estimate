@@ -148,10 +148,10 @@ main ()
   }
 
 /* Create OpenCL Kernel */
-  char kernel_name[128]="gemm_nn";
+  //char kernel_name[128]="gemm_nn";
   //char kernel_name[128]="gemm_nnA1";
   //char kernel_name[128]="gemm_nnWB";
-  //char kernel_name[128]="gemm_nn4W";
+  char kernel_name[128]="gemm_nn4W";
   kernel = clCreateKernel (program, kernel_name, &ret);
   if(ret != CL_SUCCESS){
 	fprintf(stderr,"Faild clCreateKernel %d\n",ret);
