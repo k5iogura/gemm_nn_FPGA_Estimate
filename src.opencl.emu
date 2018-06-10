@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ -z "$_FPGA_SETUP_" ];then
 export _FPGA_SETUP_=ready
 
