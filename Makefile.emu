@@ -1,5 +1,13 @@
 CFLAG := `aocl compile-config`
 LFLAG := `aocl link-config`
+
+all:gemm gemm1.aocx
+
 gemm:gemm1.cpp
 	g++ gemm1.cpp $(CFLAG) $(LFLAG) -o $@
 
+gemm1.aocx:gemm1.cl
+	aoc -march=emulator -g -v -report $^
+
+clean:
+	rm -rf gemm1.aocx gemm1.aoco gemm1 gemm
