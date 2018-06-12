@@ -1,14 +1,19 @@
+TGT:=gemm_cuda
 
 CFLAG := -I/usr/local/cuda/include
 LFLAG := -L/usr/local/cuda/lib64
 
-all:gemm
+all:environment $(TGT)
 
-gemm:gemm1.o
+$(TGT):gemm1.o
 	g++ $^ -o $@ $(LFLAG) -lOpenCL
 
 %.o:%.cpp
 	g++ -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -DonX86
 
 clean:
-	rm -rf *.o *.aocx *.aoco gemm1 gemm
+	rm -rf *.o $(TGT)
+
+environment:
+	@echo CFLAG $(CFLAG)
+	@echo LFLAG $(LFLAG)

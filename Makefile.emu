@@ -1,13 +1,20 @@
-CFLAG := `aocl compile-config`
-LFLAG := `aocl link-config`
+TGT := gemm_emu
 
-all:gemm gemm1.aocx
+CFLAG := $(shell aocl compile-config)
+LFLAG := $(shell aocl link-config)
 
-gemm:gemm1.cpp
+all:environment $(TGT) gemm1.aocx
+
+$(TGT):gemm1.cpp
 	g++ gemm1.cpp $(CFLAG) $(LFLAG) -o $@
 
 gemm1.aocx:gemm1.cl
-	aoc -march=emulator -g -v -report $^
+	aoc -march=emulator -g -v -report $^ -o $@
 
 clean:
-	rm -rf gemm1.aocx gemm1.aoco gemm1 gemm
+	rm -rf gemm1.aocx gemm1.aoco gemm1.o
+
+environment:
+	@echo check environment
+	@echo AOCL_BOARD_PACKAGE_ROOT $(AOCL_BOARD_PACKAGE_ROOT)
+	@echo BOARD $(BOARD)
