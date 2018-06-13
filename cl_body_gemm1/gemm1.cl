@@ -10,7 +10,7 @@ kernel void gemm_nn4W (const int M, const int N, const int K, const float ALPHA,
 	for (k = 0; k < K; ++k) {
 	  A_PART = A[i * lda + k];
 	  for (j = 0; j < N; ++j) {
-		C[i * ldc + j] = A_PART * B[k * ldb + j];
+		C[i * ldc + j]+= A_PART * B[k * ldb + j];
 	  }
 	}
   }

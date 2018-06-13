@@ -49,7 +49,7 @@ void run(){
 #else
     find_CKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
-        "gemm1.aocx",
+        "gemm1_fpga.aocx",
         "gemm_nn4W",
         &context, &kernel, &command_queue
     );
@@ -74,6 +74,7 @@ void run(){
     //int M=48,N=64,K=432;	// 3rd in cifar10 dataset
     //int M=16,N=1024,K=16;		// 1x1 in max
     caseP[0].M=16;	caseP[0].N=35840;	caseP[0].K=27;
+    caseP[0].M=4;	caseP[0].N=4;	caseP[0].K=4;
     caseP[1].M=32;	caseP[1].N=8960 ;	caseP[1].K=144;
     caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
     caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
@@ -99,8 +100,8 @@ void run(){
         A=(float*)malloc(sizeof(float)*M*K);
         B=(float*)malloc(sizeof(float)*K*N);
         C=(float*)malloc(sizeof(float)*M*N);
-        for(int x=0;x<M*K;x++)A[x]=1.0+(float)casei;
-        for(int x=0;x<K*N;x++)B[x]=2.0+(float)casei;
+        for(int x=0;x<M*K;x++)A[x]=2.0;
+        for(int x=0;x<K*N;x++)B[x]=3.0;
         for(int x=0;x<M*N;x++)C[x]=0.0;
         const int nloop=1;
         for(int j=0;j<nloop;j++){
@@ -115,6 +116,8 @@ void run(){
                         M * N * sizeof (float), C, &ret3);
             checkErr(ret3,"clCreateBuffer2");
 
+            //clEnqueueWriteBuffer(command_queue,memobjA,CL_TRUE, 0, M*K*4,A,0,NULL,NULL);
+            //clEnqueueWriteBuffer(command_queue,memobjB,CL_TRUE, 0, K*N*4,B,0,NULL,NULL);
             /* Set OpenCL Kernel Parameters */
             ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M);
             ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N);
@@ -133,7 +136,7 @@ void run(){
             ret = clEnqueueTask (command_queue, kernel, 0, NULL, NULL);
             checkErr(ret,"clEnqueueTask");
             clFinish(command_queue);
-            //clEnqueueReadBuffer(command_queue, memobjC, CL_TRUE, 0, M * N * sizeof(float), (void*)C, 0, NULL, NULL);
+            clEnqueueReadBuffer(command_queue, memobjC, CL_TRUE, 0, M * N * sizeof(float), (void*)C, 0, NULL, NULL);
 
             end = clock_realmsec();
             printf(":\treal time = %12.6f msec\t:",(end-start));
