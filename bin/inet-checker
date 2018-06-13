@@ -1,0 +1,13 @@
+#! /bin/bash
+
+echo JPEGS
+find images -name \*.jpg | wc
+
+echo DIR-LABELS
+find images -type d | wc
+
+echo FILE NAME SPACE
+find images -name "* *" | wc
+
+echo WGET PROCESS
+ps aux|grep wget|wc

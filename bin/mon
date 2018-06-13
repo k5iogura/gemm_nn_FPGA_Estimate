@@ -1,0 +1,5 @@
+#! /bin/bash
+
+nvidia-cv.py 2>/dev/null &
+gnome-system-monitor 2>/dev/null &
+
