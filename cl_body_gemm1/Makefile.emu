@@ -1,18 +1,19 @@
-TGT := gemm_emu
+TGT := clx_emu
 
 CFLAG := $(shell aocl compile-config)
 LFLAG := $(shell aocl link-config)
 
 all:environment $(TGT) gemm1.aocx
 
-$(TGT):gemm1.cpp
-	g++ gemm1.cpp $(CFLAG) $(LFLAG) -o $@
+$(TGT):clx.cpp
+	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU
 
-gemm1.aocx:gemm1.cl
+%.aocx:%.cl
 	aoc -march=emulator -g -v -report $^ -o $@
+	mv $@ gemm1_emu.aocx
 
 clean:
-	rm -rf gemm1.aocx gemm1.aoco gemm1.o
+	rm -rf $(TGT) gemm1_emu.aocx gemm1_emu.aoco *.o
 
 environment:
 	@echo check environment

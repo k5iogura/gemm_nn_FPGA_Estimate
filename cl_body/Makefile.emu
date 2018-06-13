@@ -6,10 +6,11 @@ LFLAG := $(shell aocl link-config)
 all:environment $(TGT) gemm1.aocx
 
 $(TGT):gemm1.cpp
-	g++ gemm1.cpp $(CFLAG) $(LFLAG) -o $@
+	g++ gemm1.cpp $(CFLAG) $(LFLAG) -o $@ -DonEMU
 
-gemm1.aocx:gemm1.cl
+%.aocx:%.cl
 	aoc -march=emulator -g -v -report $^ -o $@
+	mv $@ $(TGT).aocx
 
 clean:
 	rm -rf gemm1.aocx gemm1.aoco gemm1.o

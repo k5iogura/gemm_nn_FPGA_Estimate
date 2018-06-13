@@ -12,11 +12,12 @@ $(TGT):clx.o
 %.o:%.cpp
 	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -g
 
-gemm1.aocx:gemm1.cl
+%.aocx:%.cl
 	aoc -g -v -report $^ -o $@
+	mv $@ gemm1_fpga.aocx
 
 clean:
-	rm -rf *.o
+	rm -rf *.o $(TGT)
 
 environment:
 	@echo check environment

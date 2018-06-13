@@ -39,12 +39,21 @@ void run(){
     cl_kernel  kernel;
     cl_command_queue command_queue;
 #ifndef onX86
+#ifdef onEMU
+    find_CKQ(
+        "Intel(R) FPGA SDK for OpenCL(TM)",
+        "gemm1_emu.aocx",
+        "gemm_nn4W",
+        &context, &kernel, &command_queue
+    );
+#else
     find_CKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
         "gemm1.aocx",
         "gemm_nn4W",
         &context, &kernel, &command_queue
     );
+#endif
 #else
     find_CKQ(
         "NVIDIA CUDA",

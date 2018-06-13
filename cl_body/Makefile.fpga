@@ -12,7 +12,7 @@ $(TGT):clx.o
 %.o:%.cpp
 	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -g
 
-$(TGT).aocx:gemm1.cl
+%.aocx:%.cl
 	aoc -g -v -report $^ -o $@
 
 clean:
