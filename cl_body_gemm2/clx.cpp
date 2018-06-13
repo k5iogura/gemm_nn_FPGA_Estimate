@@ -25,7 +25,7 @@ void run(){
     cl_mem memobjA = NULL;
     cl_mem memobjB = NULL;
     cl_mem memobjC = NULL;
-    const unsigned int caseN=8;
+    const unsigned int caseN=9;
     cl_context context;
     cl_kernel  kernel;
     cl_command_queue command_queue;
@@ -65,7 +65,6 @@ void run(){
     //int M=48,N=64,K=432;	// 3rd in cifar10 dataset
     //int M=16,N=1024,K=16;		// 1x1 in max
     caseP[0].M=16;	caseP[0].N=35840;	caseP[0].K=27;
-    caseP[0].M=4;	caseP[0].N=4;	caseP[0].K=4;
     caseP[1].M=32;	caseP[1].N=8960 ;	caseP[1].K=144;
     caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
     caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
@@ -73,6 +72,7 @@ void run(){
     caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=512;
     caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=2304;
     caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;
+    caseP[8].M=35;	caseP[8].N=35;	    caseP[8].K=35;
     //int M=32,N=12544,K=144;
     //int M=16,N=3136,K=32;
     //int M=512,N=196,K=576;
@@ -124,8 +124,8 @@ void run(){
 
             /* Execute OpenCL Kernel */
             start = clock_realmsec();
-            size_t wgrp[]={N};
-            size_t lgrp[]={N};
+            size_t wgrp[]={N,0,0};
+            size_t lgrp[]={35,0,0};
             //gemm
             //float A_PART;
             for (i = 0; i < M; ++i) {
@@ -136,7 +136,7 @@ void run(){
                     //A_PART = A[i * lda + k];
                     //for (j = 0; j < N; ++j) {
                         //C[i * ldc + j]+= A_PART * B[k * ldb + j];
-                        ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, 0, wgrp, NULL, 0, NULL, NULL);
+                        ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, 0, wgrp,lgrp, 0, NULL, NULL);
                     //}
                         checkErr(ret,"clEnqueueNDRangeKernel");
                 }
