@@ -1,17 +1,29 @@
-kernel void gemm_nn4W (const int M, const int N, const int K, const float ALPHA,
-		 global float *restrict A, const int lda,
-		 global float *restrict B, const int ldb,
-		 global float *restrict C, const int ldc
+#define WRD (16)
+kernel void gemm_nn4W (int M, int N, int K, float ALPHA,
+		 global float *restrict A, int lda,
+		 global float *restrict B, int ldb,
+		 global float *restrict C, int ldc
 		)
 {
-  int i, j, k, m;
+  int i, j, k;
   float A_PART;
+  float16 Ax, Bx,Cx;
+  M = M/WRD;
+  N = N/WRD;
+  K = K/WRD;
+  lda = lda/WRD;
+  ldb = ldb/WRD;
+  ldc = ldc/WRD;
   for (i = 0; i < M; ++i) {
-	for (k = 0; k < K; ++k) {
-	  A_PART = A[i * lda + k];
-	  for (j = 0; j < N; ++j) {
-		C[i * ldc + j]+= A_PART * B[k * ldb + j];
+    for (j = 0; j < N; j++) {
+      Cx = vload16((i*ldc+j), B);
+	  for (k = 0; k < K; ++k) {
+        Ax = vload16((i*lda+k), A);
+        Bx = vload16((k*ldb+j), B);
+      //  Cx = Bx;
+      //  Cx+= Bx * Ax;
 	  }
+      vstore16(Cx,(i*ldc+j),C);
 	}
   }
 }

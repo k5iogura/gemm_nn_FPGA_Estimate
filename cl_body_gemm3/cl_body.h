@@ -60,7 +60,7 @@ void checkErr(cl_int err,const char *name)
 	}
 }
 
-cl_device_id ocl_init (char *target_name) {
+cl_device_id ocl_init (const char *target_name) {
     int i,j,k;
     cl_uint ret_num_devices;
     cl_uint ret_num_platforms;
@@ -166,7 +166,7 @@ cl_kernel cKernel(cl_program program, const char *kernel_name){
 }
 
 void find_CKQ(
-    char *platform_name, char *kernel_file, char *kernel_name,
+    const char *platform_name, const char *kernel_file, const char *kernel_name,
     cl_context *context, cl_kernel *kernel, cl_command_queue *queue
 ){
     cl_device_id device_id = ocl_init(platform_name);

@@ -3,6 +3,8 @@ TGT   := clx_fpga
 CC    := arm-linux-gnueabihf-g++
 CFLAG := `aocl compile-config`
 LFLAG := `aocl link-config`
+EFFORT:= -fast-compile
+EFFORT:= 
 
 all:environment $(TGT)
 
