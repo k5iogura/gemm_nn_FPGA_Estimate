@@ -33,14 +33,14 @@ kernel void gemm_nn4W (int M, int N, int K, float ALPHA,
     for (j = 0; j < N; ++j) {
       float Cn = C[ i*ldc + j ];
 	  for (k = 0; k < wK; ++k) {
-        Ax = vload4((i*wlda+k), A);
-        Bx = vload4((j*wlda+k), B);
-        //Cn+= dot4(Bx , Ax);
-        Cx = Bx * Ax;
-        Cn+= sum4(Cx);
+        Ax = vload4(( i*wlda + k), A);
+        Bx = vload4(( j*wlda + k), B);
+        //Cx = Bx * Ax;
+        //Cn+= sum4(Cx);
 	  }
-      C[ i*ldc + j ] = Cn;
+      //C[ i*ldc + j ] = Cn;
+      C[ i*ldc + j ] = Ax.s0;
+      C[ i*ldc + j ] = Bx.s3;
 	}
   }
-  //printf("%f\n",Cx);
 }
