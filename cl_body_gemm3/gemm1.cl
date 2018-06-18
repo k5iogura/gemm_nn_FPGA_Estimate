@@ -1,18 +1,29 @@
-float sum4(float4 a){
+float sum3(float3 a){
+    return
+    a.s0 +
+    a.s1 +
+    a.s2 ;
+}
+float sum16(float16 a){
     return
     a.s0 +
     a.s1 +
     a.s2 +
-    a.s3 ;
+    a.s3 +
+    a.s4 +
+    a.s5 +
+    a.s6 +
+    a.s7 +
+    a.s8 +
+    a.s9 +
+    a.sa +
+    a.sb +
+    a.sc +
+    a.sd +
+    a.se +
+    a.sf ;
 }
-float dot4(float4 a, float4 b){
-    return
-    a.s0*b.s0 +
-    a.s1*b.s1 +
-    a.s2*b.s2 +
-    a.s3*b.s3 ;
-}
-#define WRD (4)
+#define WRD (3)
 kernel void gemm_nn4W (int M, int N, int K, float ALPHA,
 		 global float *restrict A, int lda,
 		 global float *restrict B, int ldb,
@@ -21,8 +32,8 @@ kernel void gemm_nn4W (int M, int N, int K, float ALPHA,
 {
   int i, j, k;
   float A_PART;
-  float4 Ax, Bx, Cx;
-  //float Cn;
+  float3 Ax, Bx, Cx;
+  float Cn;
   int wM = M/WRD;
   int wN = N/WRD;
   int wK = K/WRD;
@@ -33,14 +44,16 @@ kernel void gemm_nn4W (int M, int N, int K, float ALPHA,
     for (j = 0; j < N; ++j) {
       float Cn = C[ i*ldc + j ];
 	  for (k = 0; k < wK; ++k) {
-        Ax = vload4(( i*wlda + k), A);
-        Bx = vload4(( j*wlda + k), B);
-        //Cx = Bx * Ax;
-        //Cn+= sum4(Cx);
+        Ax = vload3(( i*wlda + k), A);
+        Bx = vload3(( j*wlda + k), B);
+        Cx = Bx * Ax;
+        //Cn = sum3(Cx);
+        Cn+= sum3(Cx);
 	  }
       //C[ i*ldc + j ] = Cn;
-      C[ i*ldc + j ] = Ax.s0;
-      C[ i*ldc + j ] = Bx.s3;
+      //C[ i*ldc + j ] = Ax.sf + Bx.sf;
+      //C[ i*ldc + j ] = Cx.sf;
+      C[ i*ldc + j ] = Cn;
 	}
   }
 }
