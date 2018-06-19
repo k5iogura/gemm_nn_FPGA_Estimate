@@ -78,9 +78,9 @@ void run(){
     caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
     caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
     caseP[4].M=512;	caseP[4].N=35;		caseP[4].K=4608;
-    caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=512;
+    caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=513;
     caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=2304;
-    caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;
+    caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=513;
     caseP[8].M=5;	caseP[8].N=5;	    caseP[8].K=5;
     //int M=32,N=12544,K=144;
     //int M=16,N=3136,K=32;

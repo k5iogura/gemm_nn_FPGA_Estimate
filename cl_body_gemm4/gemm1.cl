@@ -28,21 +28,26 @@ kernel void gemm_nn4W (const int M, const int N, const int K, const float ALPHA,
   float A_PART;
   int wK = K/WRD;
   int wlda = lda/WRD;
+  float3 Axx[3*4608/WRD];
+  float3 Bxx[3*35840/WRD];
   for (i = 0; i < M; ++i) {
+    bool flag=false;
     for (j = 0; j < N; ++j) {
+      float3 Ax1, Ax2, Ax3;
       float Cn = C[ i*ldc + j ];
 	  for (k = 0; k < wK; ++k) {
-        float3 Ax1= vload3(( i*wlda + k + 0), A);
-        float3 Ax2= vload3(( i*wlda + k + 3), A);
-        float3 Ax3= vload3(( i*wlda + k + 6), A);
+        Axx[k + 0] = (!flag)? vload3(( i*wlda + k + 0), A):Axx[k + 0];
+        Axx[k + 1] = (!flag)? vload3(( i*wlda + k + 3), A):Axx[k + 1];
+        Axx[k + 2] = (!flag)? vload3(( i*wlda + k + 6), A):Axx[k + 2];
         float3 Bx1= vload3(( j*wlda + k + 0), B);
         float3 Bx2= vload3(( j*wlda + k + 3), B);
         float3 Bx3= vload3(( j*wlda + k + 6), B);
-        float3 Cx1= Bx1 * Ax1;
-        float3 Cx2= Bx2 * Ax2;
-        float3 Cx3= Bx3 * Ax3;
+        float3 Cx1= Bx1 * Axx[k + 0];
+        float3 Cx2= Bx2 * Axx[k + 1];
+        float3 Cx3= Bx3 * Axx[k + 2];
         Cn+= sum9(Cx1, Cx2, Cx3);
 	  }
+      flag=true;
       C[ i*ldc + j ] = Cn;
 	}
   }

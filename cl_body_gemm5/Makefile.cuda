@@ -1,11 +1,11 @@
 TGT:=clx_cuda
 
-CFLAG := -I/usr/local/cuda/include
+CFLAG := -I/usr/local/cuda/include -Wwrite-strings
 LFLAG := -L/usr/local/cuda/lib64
 
 all:environment $(TGT)
 
-$(TGT):gemm1.o
+$(TGT):clx.o
 	g++ -g $^ -o $@ $(LFLAG) -lOpenCL
 
 %.o:%.cpp

@@ -18,21 +18,29 @@ void init_clock_realmsec(){
 	ts.tv_sec=0;
 	ts.tv_nsec=0;
 	clock_settime(CLOCK_REALTIME,&ts);
-//	timeval tv;
-//	timezone tz;
-//	gettimeofday(&tv,&tz);
-//	tv.tv_sec=tv.tv_usec=0;
-//	settimeofday(&tv,&tz);
 }
 double clock_realmsec(){
 	timespec ts;
 	clock_gettime(CLOCK_MONOTONIC,&ts);
-//	clock_gettime(CLOCK_REALTIME,&ts);
 	return (ts.tv_sec+ts.tv_nsec*1e-9)*1000.;
-//	timeval tv;
-//	timezone tz;
-//	gettimeofday(&tv,&tz);
-//	return ((float)tv.tv_sec);
+}
+
+void gemm_nn4W (int M, int N, int K, float ALPHA,
+		 float * A, int lda,
+		 float * B, int ldb,
+		 float * C, int ldc
+		)
+{
+  int i, j, k, m;
+  float A_PART;
+  for (i = 0; i < M; ++i) {
+	for (k = 0; k < K; ++k) {
+	  A_PART = A[i * lda + k];
+	  for (j = 0; j < N; ++j) {
+		C[i * ldc + j]+= A_PART * B[k * ldb + j];
+	  }
+	}
+  }
 }
 
 int
@@ -53,7 +61,7 @@ main ()
   cl_int ret1,ret2,ret3;
   float Alpha=1.0;
 
-  double start,end;
+  double total=0,start,end;
 
   FILE *fp;
 #ifdef onX86
@@ -167,11 +175,16 @@ main ()
   //int M=32,N=256,K=288;	// 2nd in cifar10 dataset
   //int M=48,N=64,K=432;	// 3rd in cifar10 dataset
   //int M=16,N=1024,K=16;		// 1x1 in max
-  caseP[0].M=16;	caseP[0].N=1024;	caseP[0].K=144;
-  caseP[1].M=48;	caseP[1].N=121 ;	caseP[1].K=48;
-  caseP[2].M=32;	caseP[2].N=121;		caseP[2].K=32;
-  caseP[3].M=3 ;	caseP[3].N=16;		caseP[3].K=3;
   //int M=32,N=12544,K=144;
+  caseP[0].M=16;	caseP[0].N=35840;	caseP[0].K=27;
+  caseP[1].M=32;	caseP[1].N=8960 ;	caseP[1].K=144;
+  caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
+  caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
+  caseP[4].M=512;	caseP[4].N=35;		caseP[4].K=4608;
+  caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=512;
+  caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=2304;
+  caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;
+  caseP[8].M=5;	caseP[8].N=5;	    caseP[8].K=5;
   //int M=16,N=3136,K=32;
   //int M=512,N=196,K=576;
   //int M=1024,N=169,K=9216;
@@ -194,7 +207,6 @@ main ()
   for(int x=0;x<M*N;x++)C[x]=0.0;
 	const int nloop=1;
 	for(int j=0;j<nloop;j++){
-	  start = clock_realmsec();
 	  memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
 						M * K * sizeof (float), A, &ret1);
 	  memobjB = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
@@ -225,7 +237,14 @@ main ()
 	  }else{fprintf(stderr,"CL_SUCCESS 5\n");}
 
 	/* Execute OpenCL Kernel */
-	  ret = clEnqueueTask (command_queue, kernel, 0, NULL, NULL);
+	  //ret = clEnqueueTask (command_queue, kernel, 0, NULL, NULL);
+	  start = clock_realmsec();
+      gemm_nn4W (M, N, K, Alpha,
+               A, K,
+               B, N,
+               C, N
+      );
+      end = clock_realmsec();
 //	  if(ret != CL_SUCCESS){
 //		fprintf(stderr,"Faild clEnqueueTask %d\n",ret);
 //		exit(ret);
@@ -234,19 +253,20 @@ main ()
 	/* Copy results from the memory buffer */
 	//  ret = clEnqueueReadBuffer (command_queue, memobj, CL_TRUE, 0,
 	//					MEM_SIZE * sizeof (char), string, 0, NULL, NULL);
-	  clFinish(command_queue);
-	  if(ret == CL_SUCCESS){
+	  //clFinish(command_queue);
+	  //if(ret == CL_SUCCESS){
 		  for(int y=0;y<1;y++)
 			printf("%f[%d]\n",C[y],y);
 
-		  ret = clReleaseMemObject (memobjA);
-		  ret = clReleaseMemObject (memobjB);
-		  ret = clReleaseMemObject (memobjC);
-		  end = clock_realmsec();
+		  //ret = clReleaseMemObject (memobjA);
+		  //ret = clReleaseMemObject (memobjB);
+		  //ret = clReleaseMemObject (memobjC);
 		  printf("real time = %.3fmsec\n",(end-start));
-	  }else{fprintf(stderr,"clEnqueueTask Error %d\n",ret);break;}
+      total+=(end-start);
+	  //}else{fprintf(stderr,"clEnqueueTask Error %d\n",ret);break;}
 	}
 	}
+  printf("total time = %.3fmsec\n",(total));
 
 /* Finalization */
   ret = clFlush (command_queue);

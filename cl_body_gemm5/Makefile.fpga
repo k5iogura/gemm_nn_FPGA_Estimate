@@ -3,20 +3,23 @@ TGT   := clx_fpga
 CC    := arm-linux-gnueabihf-g++
 CFLAG := `aocl compile-config`
 LFLAG := `aocl link-config`
+EFFORT:= -fast-compile
+EFFORT:= 
 
 all:environment $(TGT)
 
-$(TGT):gemm1.o
+$(TGT):clx.o
 	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm -g
 
 %.o:%.cpp
 	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -g
 
-$(TGT).aocx:gemm1.cl
+%.aocx:%.cl
 	aoc -g -v -report $^ -o $@
+	mv $@ gemm1_fpga.aocx
 
 clean:
-	rm -rf *.o
+	rm -rf *.o $(TGT)
 
 environment:
 	@echo check environment

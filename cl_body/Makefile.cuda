@@ -5,7 +5,7 @@ LFLAG := -L/usr/local/cuda/lib64
 
 all:environment $(TGT)
 
-$(TGT):clx.o
+$(TGT):gemm1.o
 	g++ -g $^ -o $@ $(LFLAG) -lOpenCL
 
 %.o:%.cpp
