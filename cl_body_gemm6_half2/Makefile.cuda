@@ -1,0 +1,26 @@
+DEBUG := 1
+TGT:=clx_cuda
+
+CFLAG := -I/usr/local/cuda/include -Wwrite-strings $(shell pkg-config --cflags IlmBase)
+LFLAG := -L/usr/local/cuda/lib64 $(shell pkg-config --libs IlmBase)
+
+ifeq ($(DEBUG),1)
+CFLAGS+= -g
+else
+CFLAGS+= -Ofast
+endif
+
+all:environment $(TGT)
+
+$(TGT):clx.o
+	g++ -g $^ -o $@ $(LFLAG) -lOpenCL $(CFLAG)
+
+%.o:%.cpp
+	g++ -g -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -DonX86
+
+clean:
+	rm -rf *.o $(TGT)
+
+environment:
+	@echo CFLAG $(CFLAG)
+	@echo LFLAG $(LFLAG)

@@ -7,10 +7,10 @@ LFLAG := `aocl link-config`
 all:environment $(TGT)
 
 $(TGT):clx.o
-	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm -g
+	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm -Ofast
 
 %.o:%.cpp
-	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -g
+	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -Ofast
 
 %.aocx:%.cl
 	aoc -g -v -report $^ -o $@

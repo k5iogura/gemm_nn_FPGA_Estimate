@@ -166,7 +166,7 @@ main ()
 	exit(ret);
   }else{fprintf(stderr,"CL_SUCCESS 4 %s\n",kernel_name);}
 
-  const unsigned int caseN=4;
+  const unsigned int caseN=9;
   struct caseP{
      int M,N,K;
   }caseP[10];
@@ -203,7 +203,7 @@ main ()
   B=(float*)malloc(sizeof(float)*K*N);
   C=(float*)malloc(sizeof(float)*M*N);
   for(int x=0;x<M*K;x++)A[x]=1.0;
-  for(int x=0;x<K*N;x++)B[x]=2.0;
+  for(int x=0;x<K*N;x++)B[x]=1.0;
   for(int x=0;x<M*N;x++)C[x]=0.0;
 	const int nloop=1;
 	for(int j=0;j<nloop;j++){
