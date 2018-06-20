@@ -96,18 +96,18 @@ void run(){
         for(int j=0;j<nloop;j++){
 
             //memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-            memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_COPY_HOST_PTR,
+            memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
                         M * K * sizeof (cl_half), (void*)A, &ret1);
             checkErr(ret1,"clCreateBuffer0");
-            memobjB = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_COPY_HOST_PTR,
+            memobjB = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
                         K * N * sizeof (cl_half), (void*)B, &ret2);
             checkErr(ret2,"clCreateBuffer1");
-            memobjC = clCreateBuffer (context, CL_MEM_READ_WRITE|CL_MEM_COPY_HOST_PTR,
+            memobjC = clCreateBuffer (context, CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
                         M * N * sizeof (cl_half), (void*)C, &ret3);
             checkErr(ret3,"clCreateBuffer2");
 
-            clEnqueueWriteBuffer(command_queue,memobjA,CL_TRUE, 0, M*K*sizeof(cl_half),A,0,NULL,NULL);
-            clEnqueueWriteBuffer(command_queue,memobjB,CL_TRUE, 0, K*N*sizeof(cl_half),B,0,NULL,NULL);
+            //clEnqueueWriteBuffer(command_queue,memobjA,CL_TRUE, 0, M*K*sizeof(cl_half),A,0,NULL,NULL);
+            //clEnqueueWriteBuffer(command_queue,memobjB,CL_TRUE, 0, K*N*sizeof(cl_half),B,0,NULL,NULL);
             /* Set OpenCL Kernel Parameters */
             ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M);
             ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N);
