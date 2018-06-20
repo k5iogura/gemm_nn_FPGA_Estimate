@@ -9,7 +9,7 @@ EFFORT:= -fast-compile
 EFFORT:= 
 
 CFLAG += -I/home/20076433/gemm_nn_fpga_estimate_emu/usr/include/
-LFLAG += -pthread -L/home/20076433/gemm_nn_fpga_estimate_emu/usr/lib/arm-linux-gnueabihf -lImath -lHalf -lIex -lIexMath -lIlmThread
+LFLAG += -pthread -L/home/20076433/gemm_nn_fpga_estimate_emu/usr/lib/arm-linux-gnueabihf -lImath -lHalf -lIex -lIlmThread
 
 ifeq ($(DEBUG),1)
 CFLAG += -g
