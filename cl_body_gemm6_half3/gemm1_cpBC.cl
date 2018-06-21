@@ -17,15 +17,9 @@ kernel void gemm_nn4W (const int M, const int N, const int K, const float ALPHA,
         float16 Bx1 = vload_half16(( k*wldb + j +  0), B);
         float16 Bx2 = vload_half16(( k*wldb + j + 16), B);
         float3  Bx3 = vload_half3( ( k*wldb + j + 32), B);
-        float16 Cx1 = vload_half16(( i*wldc + j +  0), C);
-        float16 Cx2 = vload_half16(( i*wldc + j + 16), C);
-        float3  Cx3 = vload_half3( ( i*wldc + j + 32), C);
-        Cx1+= A_PART * Bx1;
-        Cx2+= A_PART * Bx2;
-        Cx3+= A_PART * Bx3;
-        vstore_half16( Cx1, ( i*wldc + j +  0), C);
-        vstore_half16( Cx2, ( i*wldc + j + 16), C);
-        vstore_half3(  Cx3, ( i*wldc + j + 32), C);
+        vstore_half16( Bx1, ( i*wldc + j +  0), C);
+        vstore_half16( Bx2, ( i*wldc + j + 16), C);
+        vstore_half3(  Bx3, ( i*wldc + j + 32), C);
 	  }
 	}
   }
