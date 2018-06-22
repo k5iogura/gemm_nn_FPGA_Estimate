@@ -13,21 +13,33 @@ void init_clock_realmsec(){
 	ts.tv_sec=0;
 	ts.tv_nsec=0;
 	clock_settime(CLOCK_REALTIME,&ts);
-//	timeval tv;
-//	timezone tz;
-//	gettimeofday(&tv,&tz);
-//	tv.tv_sec=tv.tv_usec=0;
-//	settimeofday(&tv,&tz);
 }
 double clock_realmsec(){
 	timespec ts;
 	clock_gettime(CLOCK_MONOTONIC,&ts);
-//	clock_gettime(CLOCK_REALTIME,&ts);
 	return (ts.tv_sec+ts.tv_nsec*1e-9)*1000.;
-//	timeval tv;
-//	timezone tz;
-//	gettimeofday(&tv,&tz);
-//	return ((float)tv.tv_sec);
+}
+
+void row2col_major(int N, int K, half *in_b, half *B){
+    int i,j,k;
+    int m,n;
+    for(k=0;k<K;k++)
+        for(j=0;j<N;j++){
+            m = k*N + j;
+            n = j*K + k;
+            B[n] = in_b[m];
+        }
+}
+
+void col2row_major(int N, int K, half *in_b, half *B){
+    int i,j,k;
+    int m,n;
+    for(j=0;j<N;j++)
+        for(k=0;k<K;k++){
+            m = k*N + j;
+            n = j*K + k;
+            B[m] = in_b[n];
+        }
 }
 
 void run(){
@@ -39,6 +51,21 @@ void run(){
     cl_context context;
     cl_kernel  kernel;
     cl_command_queue command_queue;
+/*    float *X =(float*)malloc(6*sizeof(float));
+    float *x =(float*)malloc(6*sizeof(float));
+    printf("Matrix\n");
+    for(int i = 0; i<6 ; i++) X[i]=i/10.;
+    for(int i = 0; i<2 ; i++){
+        for(int j = 0; j<3 ; j++)
+            printf("%f\t",X[i*3+j]);
+        printf("\n");
+    }
+    printf("row-major\n");
+    for(int i = 0; i<2*3 ; i++) printf("%f\t",X[i]); printf("\n");
+    row2col_major(3,2,X,x);
+    printf("col-major\n");
+    for(int i = 0; i<2*3 ; i++) printf("%f\t",x[i]); printf("\n");
+*/
 #ifndef onX86
 #ifdef onEMU
     find_CKQ(
@@ -85,22 +112,24 @@ void run(){
 
         printf("M/N/K = %d\t%d\t%d:\t",M,N,K);
 
-        half *A,*B,*C;
+        half *A,*B,*C,*b;
         A=(half*)malloc(sizeof(half)*M*K);
         B=(half*)malloc(sizeof(half)*K*N);
         C=(half*)malloc(sizeof(half)*M*N);
+        b=(half*)malloc(sizeof(half)*K*N);
         for(int x=0;x<M*K;x++)A[x]=1.0;
         for(int x=0;x<K*N;x++)B[x]=1.0;
         for(int x=0;x<M*N;x++)C[x]=0.0;
         const int nloop=1;
         for(int j=0;j<nloop;j++){
 
+            row2col_major(N,K,B,b);
             //memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
             memobjA = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
                         M * K * sizeof (cl_half), (void*)A, &ret1);
             checkErr(ret1,"clCreateBuffer0");
             memobjB = clCreateBuffer (context, CL_MEM_READ_ONLY|CL_MEM_USE_HOST_PTR,
-                        K * N * sizeof (cl_half), (void*)B, &ret2);
+                        K * N * sizeof (cl_half), (void*)b, &ret2);
             checkErr(ret2,"clCreateBuffer1");
             memobjC = clCreateBuffer (context, CL_MEM_READ_WRITE|CL_MEM_USE_HOST_PTR,
                         M * N * sizeof (cl_half), (void*)C, &ret3);
