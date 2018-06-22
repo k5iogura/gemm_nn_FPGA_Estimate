@@ -1,0 +1,274 @@
+{
+  "performanceSummary":
+  {
+    "name":"Kernel Summary"
+    , "columns":
+    ["Kernel Name", "Kernel Type", "Autorun", "Workgroup Size", "# Compute Units"]
+    , "children":
+    [
+      {
+        "name":"gemm_nn9W"
+        , "data":
+        [
+          "Single work-item"
+          , "No"
+          , [1, 1, 1]
+          , 1
+        ]
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Kernel type: Single work-item"
+          }
+          , {
+            "type":"text"
+            , "text":"Required workgroup size: (1, 1, 1)"
+          }
+          , {
+            "type":"text"
+            , "text":"Maximum workgroup size: 1"
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":21
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"gemm_nnfW"
+        , "data":
+        [
+          "Single work-item"
+          , "No"
+          , [1, 1, 1]
+          , 1
+        ]
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Kernel type: Single work-item"
+          }
+          , {
+            "type":"text"
+            , "text":"Required workgroup size: (1, 1, 1)"
+          }
+          , {
+            "type":"text"
+            , "text":"Maximum workgroup size: 1"
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":51
+            }
+          ]
+        ]
+      }
+    ]
+  }
+  , "estimatedResources":
+  {
+    "name":"Estimated Resource Usage"
+    , "columns":
+    ["Kernel Name", "ALUTs ", "FFs  ", "RAMs ", "DSPs "]
+    , "children":
+    [
+      {
+        "name":"gemm_nn9W"
+        , "data":
+        [25922, 35072, 133, 15]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":21
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"gemm_nnfW"
+        , "data":
+        [29235, 31127, 70, 22]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":51
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Kernel Subtotal"
+        , "classes":
+        ["summary-highlight", "nohover"]
+        , "data":
+        [55157, 66199, 203, 37]
+      }
+      , {
+        "name":"Global Interconnect"
+        , "classes":
+        ["summary-highlight", "nohover"]
+        , "data":
+        [858, 4406, 10, 0]
+      }
+      , {
+        "name":"Board Interface"
+        , "classes":
+        ["summary-highlight", "nohover"]
+        , "data":
+        [2160, 1908, 20, 0]
+      }
+      , {
+        "name":"Total"
+        , "classes":
+        ["summary-highlight", "nohover"]
+        , "data":
+        [58175, 72513, 233, 37]
+        , "data_percent":
+        [53.0929, 33.0892, 45.3307, 33.0357]
+      }
+      , {
+        "name":"Available"
+        , "classes":
+        ["summary-highlight", "nohover"]
+        , "data":
+        [109572, 219144, 514, 112]
+      }
+    ]
+  }
+  , "compileWarnings":
+  {
+    "name":"Compile Warnings"
+    , "children":
+    [
+      {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":30
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":31
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":32
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":33
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":34
+            }
+          ]
+        ]
+      }
+      , {
+        "name":"Load uses a Burst-coalesced non-aligned LSU"
+        , "details":
+        [
+          {
+            "type":"text"
+            , "text":"Use Dynamic Profiler to determine performance impact of this LSU."
+          }
+        ]
+        , "debug":
+        [
+          [
+            {
+              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+              , "line":35
+            }
+          ]
+        ]
+      }
+    ]
+  }
+}

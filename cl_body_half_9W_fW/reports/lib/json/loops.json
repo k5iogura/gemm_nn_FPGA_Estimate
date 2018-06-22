@@ -1,0 +1,585 @@
+{
+  "columns":
+  ["", "Pipelined", "II", "Bottleneck", "Details"]
+  , "children":
+  [
+    {
+      "name":"Kernel: gemm_nn9W"
+      , "data":
+      ["", "", ""]
+      , "debug":
+      [
+        [
+          {
+            "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+            , "line":21
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"brief"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"See %L for more information"
+          , "links":
+          [
+            {
+              "guide":"Best Practices Guide : Kernels"
+              , "link":"https://www.altera.com/documentation/mwh1391807516407.html#ipp1476408832230"
+            }
+          ]
+        }
+      ]
+      , "children":
+      [
+        {
+          "name":"gemm_nn9W.B1"
+          , "data":
+          ["Yes", ">=1", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                , "line":26
+              }
+            ]
+            , [
+              {
+                "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                , "line":26
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Iteration executed serially across gemm_nn9W.B2. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Load Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"28"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"41"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"text"
+              , "text":"Iteration executed serially across gemm_nn9W.B2. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"41"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"41"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"brief"
+              , "text":"Serial exe: Memory dependency"
+            }
+            , {
+              "type":"text"
+              , "text":"See %L for more information"
+              , "links":
+              [
+                {
+                  "guide":"Best Practices Guide : Nested Loops"
+                  , "link":"https://www.altera.com/documentation/mwh1391807516407.html#rfr1469543500580"
+                }
+              ]
+            }
+          ]
+          , "children":
+          [
+            {
+              "name":"gemm_nn9W.B2"
+              , "data":
+              ["Yes", ">=1", "n/a"]
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":27
+                  }
+                ]
+                , [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":27
+                  }
+                ]
+                , [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":42
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"brief"
+                  , "text":" "
+                }
+                , {
+                  "type":"text"
+                  , "text":"II is an approximation due to variable inner loop trip count."
+                  , "links":
+                  [
+                    {
+                      "view":"Verification statistics"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"gemm_nn9W.B3"
+                  , "data":
+                  ["Yes", "~18", "II"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":29
+                      }
+                    ]
+                    , [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":29
+                      }
+                    ]
+                    , [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":40
+                      }
+                    ]
+                  ]
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"Compiler failed to schedule this loop with smaller II due to data dependency on variable(s):"
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"Cn (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"39"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"The critical path that prevented successful II = 17 scheduling:"
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"16 clock cycles Floating-point Add Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"39"
+                            }
+                          ]
+                        }
+                        , {
+                          "type":"text"
+                          , "text":"3.8 clock cycles '__acl__convert_HalfToFP' Function Call Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"39"
+                            }
+                          ]
+                        }
+                        , {
+                          "type":"text"
+                          , "text":"2 clock cycles '__acl__convert_FPtoHalf' Function Call Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"39"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"brief"
+                      , "text":"Data dependency"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Loops in a Single Work-Item Kernel"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#wfa1476380079940"
+                        }
+                      ]
+                    }
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    , {
+      "name":"Kernel: gemm_nnfW"
+      , "data":
+      ["", "", ""]
+      , "debug":
+      [
+        [
+          {
+            "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+            , "line":51
+          }
+        ]
+      ]
+      , "details":
+      [
+        {
+          "type":"brief"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"Single work-item execution"
+        }
+        , {
+          "type":"text"
+          , "text":"See %L for more information"
+          , "links":
+          [
+            {
+              "guide":"Best Practices Guide : Kernels"
+              , "link":"https://www.altera.com/documentation/mwh1391807516407.html#ipp1476408832230"
+            }
+          ]
+        }
+      ]
+      , "children":
+      [
+        {
+          "name":"gemm_nnfW.B1"
+          , "data":
+          ["Yes", ">=1", "n/a"]
+          , "debug":
+          [
+            [
+              {
+                "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                , "line":56
+              }
+            ]
+            , [
+              {
+                "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                , "line":56
+              }
+            ]
+          ]
+          , "details":
+          [
+            {
+              "type":"text"
+              , "text":"Iteration executed serially across gemm_nnfW.B2. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Load Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"59"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"65"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"text"
+              , "text":"Iteration executed serially across gemm_nnfW.B2. Only a single loop iteration will execute inside this region due to memory dependency:"
+              , "details":
+              [
+                {
+                  "type":"text"
+                  , "text":"From: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"65"
+                    }
+                  ]
+                }
+                , {
+                  "type":"text"
+                  , "text":"To: Store Operation (%L)"
+                  , "links":
+                  [
+                    {
+                      "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                      , "line":"65"
+                    }
+                  ]
+                }
+              ]
+            }
+            , {
+              "type":"brief"
+              , "text":"Serial exe: Memory dependency"
+            }
+            , {
+              "type":"text"
+              , "text":"See %L for more information"
+              , "links":
+              [
+                {
+                  "guide":"Best Practices Guide : Nested Loops"
+                  , "link":"https://www.altera.com/documentation/mwh1391807516407.html#rfr1469543500580"
+                }
+              ]
+            }
+          ]
+          , "children":
+          [
+            {
+              "name":"gemm_nnfW.B2"
+              , "data":
+              ["Yes", ">=1", "n/a"]
+              , "debug":
+              [
+                [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":57
+                  }
+                ]
+                , [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":57
+                  }
+                ]
+                , [
+                  {
+                    "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                    , "line":66
+                  }
+                ]
+              ]
+              , "details":
+              [
+                {
+                  "type":"brief"
+                  , "text":" "
+                }
+                , {
+                  "type":"text"
+                  , "text":"II is an approximation due to variable inner loop trip count."
+                  , "links":
+                  [
+                    {
+                      "view":"Verification statistics"
+                    }
+                  ]
+                }
+              ]
+              , "children":
+              [
+                {
+                  "name":"gemm_nnfW.B3"
+                  , "data":
+                  ["Yes", "~18", "II"]
+                  , "debug":
+                  [
+                    [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":59
+                      }
+                    ]
+                    , [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":59
+                      }
+                    ]
+                    , [
+                      {
+                        "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                        , "line":64
+                      }
+                    ]
+                  ]
+                  , "details":
+                  [
+                    {
+                      "type":"text"
+                      , "text":"Compiler failed to schedule this loop with smaller II due to data dependency on variable(s):"
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"Cn (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"63"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"The critical path that prevented successful II = 17 scheduling:"
+                      , "details":
+                      [
+                        {
+                          "type":"text"
+                          , "text":"16 clock cycles Floating-point Add Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"63"
+                            }
+                          ]
+                        }
+                        , {
+                          "type":"text"
+                          , "text":"3.8 clock cycles '__acl__convert_HalfToFP' Function Call Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"63"
+                            }
+                          ]
+                        }
+                        , {
+                          "type":"text"
+                          , "text":"2 clock cycles '__acl__convert_FPtoHalf' Function Call Operation (%L)"
+                          , "links":
+                          [
+                            {
+                              "filename":"/home/20076433/gemm_nn_FPGA_Estimate/cl_body_half_9W_fW/gemm1.cl"
+                              , "line":"63"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                    , {
+                      "type":"brief"
+                      , "text":"Data dependency"
+                    }
+                    , {
+                      "type":"text"
+                      , "text":"See %L for more information"
+                      , "links":
+                      [
+                        {
+                          "guide":"Best Practices Guide : Loops in a Single Work-Item Kernel"
+                          , "link":"https://www.altera.com/documentation/mwh1391807516407.html#wfa1476380079940"
+                        }
+                      ]
+                    }
+                  ]
+                  , "children":
+                  [
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
