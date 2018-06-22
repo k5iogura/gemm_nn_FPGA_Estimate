@@ -1,0 +1,26 @@
+TGT   := clx_fpga
+
+CC    := arm-linux-gnueabihf-g++
+CFLAG := `aocl compile-config`
+LFLAG := `aocl link-config`
+
+all:environment $(TGT)
+
+$(TGT):clx.o
+	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm -g
+
+%.o:%.cpp
+	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL -g
+
+%.aocx:%.cl
+	aoc -g -v -report $^ -o $@
+
+clean:
+	rm -rf *.o
+
+environment:
+	@echo check environment
+	@echo AOCL_BOARD_PACKAGE_ROOT $(AOCL_BOARD_PACKAGE_ROOT)
+	@echo BOARD $(BOARD)
+	@if [ -z $(CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA) ];then echo IN FPGA MODE;fi
+
