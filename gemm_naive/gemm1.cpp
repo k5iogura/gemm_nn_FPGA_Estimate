@@ -196,7 +196,7 @@ main ()
   int N=caseP[casei].N;
   int K=caseP[casei].K;
 
-  printf("M/N/K = %d\t%d\t%d\n",M,N,K);
+  printf("M/N/K = %d\t%d\t%d\t",M,N,K);
 
   float *A,*B,*C;
   A=(float*)malloc(sizeof(float)*M*K);
@@ -234,7 +234,7 @@ main ()
 	  if(ret != CL_SUCCESS){
 		fprintf(stderr,"Faild clSetKernelArg %d\n",ret);
 		exit(ret);
-	  }else{fprintf(stderr,"CL_SUCCESS 5\n");}
+	  }
 
 	/* Execute OpenCL Kernel */
 	  //ret = clEnqueueTask (command_queue, kernel, 0, NULL, NULL);
@@ -255,13 +255,13 @@ main ()
 	//					MEM_SIZE * sizeof (char), string, 0, NULL, NULL);
 	  //clFinish(command_queue);
 	  //if(ret == CL_SUCCESS){
+		  printf("real time = %.3fmsec\t",(end-start));
 		  for(int y=0;y<1;y++)
 			printf("%f[%d]\n",C[y],y);
 
 		  //ret = clReleaseMemObject (memobjA);
 		  //ret = clReleaseMemObject (memobjB);
 		  //ret = clReleaseMemObject (memobjC);
-		  printf("real time = %.3fmsec\n",(end-start));
       total+=(end-start);
 	  //}else{fprintf(stderr,"clEnqueueTask Error %d\n",ret);break;}
 	}
