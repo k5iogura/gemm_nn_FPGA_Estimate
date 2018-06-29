@@ -47,7 +47,7 @@ void run(){
     cl_mem memobjA = NULL;
     cl_mem memobjB = NULL;
     cl_mem memobjC = NULL;
-    const unsigned int caseN=9;
+    const unsigned int caseN=8;
     cl_context context;
     cl_kernel  kernel;
     cl_command_queue command_queue;
@@ -68,18 +68,24 @@ void run(){
 */
 #ifndef onX86
 #ifdef onEMU
-    find_CKQ(
+    const char *k_name[2]={"gemm_nn9W","gemm_nnfW"};
+    cl_kernel kernels[2];
+    find_CnKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
         "gemm1_emu.aocx",
-        "gemm_nnfW",
-        &context, &kernel, &command_queue
+        2,
+        k_name,
+        &context, kernels, &command_queue
     );
 #else
-    find_CKQ(
+    const char *k_name[2]={"gemm_nn1bW","gemm_nn20W"};
+    cl_kernel kernels[2];
+    find_CnKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
         "gemm1_fpga.aocx",
-        "gemm_nnfW",
-        &context, &kernel, &command_queue
+        2,
+        k_name,
+        &context, kernels, &command_queue
     );
 #endif
 #else
@@ -101,10 +107,9 @@ void run(){
     caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
     caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
     caseP[4].M=512;	caseP[4].N=35;		caseP[4].K=4608;
-    caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=513;
+    caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=512;
     caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=2304;
-    caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=513;
-    caseP[8].M=5;	caseP[8].N=5;	    caseP[8].K=5;
+    caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;
     for(int casei=0;casei<caseN;casei++){
         int M=caseP[casei].M;
         int N=caseP[casei].N;
@@ -120,6 +125,8 @@ void run(){
         for(int x=0;x<M*K;x++)A[x]=1.0;
         for(int x=0;x<K*N;x++)B[x]=1.0;
         for(int x=0;x<M*N;x++)C[x]=0.0;
+        if(!(K%27)) kernel = kernels[0];
+        else kernel = kernels[1];
         const int nloop=1;
         for(int j=0;j<nloop;j++){
 
@@ -138,16 +145,16 @@ void run(){
             //clEnqueueWriteBuffer(command_queue,memobjA,CL_TRUE, 0, M*K*sizeof(cl_half),A,0,NULL,NULL);
             //clEnqueueWriteBuffer(command_queue,memobjB,CL_TRUE, 0, K*N*sizeof(cl_half),B,0,NULL,NULL);
             /* Set OpenCL Kernel Parameters */
-            ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M);
-            ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N);
-            ret|= clSetKernelArg (kernel, 2, sizeof (cl_int),  &K);
-            ret|= clSetKernelArg (kernel, 3, sizeof (cl_float),&Alpha);
-            ret|= clSetKernelArg (kernel, 4, sizeof (cl_mem), (void *) &memobjA);
-            ret|= clSetKernelArg (kernel, 5, sizeof (cl_int),  &K);
-            ret|= clSetKernelArg (kernel, 6, sizeof (cl_mem), (void *) &memobjB);
-            ret|= clSetKernelArg (kernel, 7, sizeof (cl_int),  &N);
-            ret|= clSetKernelArg (kernel, 8, sizeof (cl_mem), (void *) &memobjC);
-            ret|= clSetKernelArg (kernel, 9, sizeof (cl_int),  &N);
+            ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M); checkErr(ret,"clSetKernelArg-0");
+            ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-1");
+            ret|= clSetKernelArg (kernel, 2, sizeof (cl_int),  &K); checkErr(ret,"clSetKernelArg-2");
+            ret|= clSetKernelArg (kernel, 3, sizeof (cl_float),&Alpha); checkErr(ret,"clSetKernelArg-3");
+            ret|= clSetKernelArg (kernel, 4, sizeof (cl_mem), (void *) &memobjA); checkErr(ret,"clSetKernelArg-4");
+            ret|= clSetKernelArg (kernel, 5, sizeof (cl_int),  &K); checkErr(ret,"clSetKernelArg-5");
+            ret|= clSetKernelArg (kernel, 6, sizeof (cl_mem), (void *) &memobjB); checkErr(ret,"clSetKernelArg-6");
+            ret|= clSetKernelArg (kernel, 7, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-7");
+            ret|= clSetKernelArg (kernel, 8, sizeof (cl_mem), (void *) &memobjC); checkErr(ret,"clSetKernelArg-8");
+            ret|= clSetKernelArg (kernel, 9, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-9");
             checkErr(ret,"clSetKernelArg");
 
             /* Execute OpenCL Kernel */
