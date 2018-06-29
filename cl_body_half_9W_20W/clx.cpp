@@ -68,11 +68,14 @@ void run(){
 */
 #ifndef onX86
 #ifdef onEMU
-    find_CKQ(
+    const char *k_name[2]={"gemm_nn1bW","gemm_nn20W"};
+    cl_kernel kernels[2];
+    find_CnKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
         "gemm1_emu.aocx",
-        "gemm_nnfW",
-        &context, &kernel, &command_queue
+        2,
+        k_name,
+        &context, kernels, &command_queue
     );
 #else
     const char *k_name[2]={"gemm_nn1bW","gemm_nn20W"};
@@ -142,16 +145,16 @@ void run(){
             //clEnqueueWriteBuffer(command_queue,memobjA,CL_TRUE, 0, M*K*sizeof(cl_half),A,0,NULL,NULL);
             //clEnqueueWriteBuffer(command_queue,memobjB,CL_TRUE, 0, K*N*sizeof(cl_half),B,0,NULL,NULL);
             /* Set OpenCL Kernel Parameters */
-            ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M);
-            ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N);
-            ret|= clSetKernelArg (kernel, 2, sizeof (cl_int),  &K);
-            ret|= clSetKernelArg (kernel, 3, sizeof (cl_float),&Alpha);
-            ret|= clSetKernelArg (kernel, 4, sizeof (cl_mem), (void *) &memobjA);
-            ret|= clSetKernelArg (kernel, 5, sizeof (cl_int),  &K);
-            ret|= clSetKernelArg (kernel, 6, sizeof (cl_mem), (void *) &memobjB);
-            ret|= clSetKernelArg (kernel, 7, sizeof (cl_int),  &N);
-            ret|= clSetKernelArg (kernel, 8, sizeof (cl_mem), (void *) &memobjC);
-            ret|= clSetKernelArg (kernel, 9, sizeof (cl_int),  &N);
+            ret|= clSetKernelArg (kernel, 0, sizeof (cl_int),  &M); checkErr(ret,"clSetKernelArg-0");
+            ret|= clSetKernelArg (kernel, 1, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-1");
+            ret|= clSetKernelArg (kernel, 2, sizeof (cl_int),  &K); checkErr(ret,"clSetKernelArg-2");
+            ret|= clSetKernelArg (kernel, 3, sizeof (cl_float),&Alpha); checkErr(ret,"clSetKernelArg-3");
+            ret|= clSetKernelArg (kernel, 4, sizeof (cl_mem), (void *) &memobjA); checkErr(ret,"clSetKernelArg-4");
+            ret|= clSetKernelArg (kernel, 5, sizeof (cl_int),  &K); checkErr(ret,"clSetKernelArg-5");
+            ret|= clSetKernelArg (kernel, 6, sizeof (cl_mem), (void *) &memobjB); checkErr(ret,"clSetKernelArg-6");
+            ret|= clSetKernelArg (kernel, 7, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-7");
+            ret|= clSetKernelArg (kernel, 8, sizeof (cl_mem), (void *) &memobjC); checkErr(ret,"clSetKernelArg-8");
+            ret|= clSetKernelArg (kernel, 9, sizeof (cl_int),  &N); checkErr(ret,"clSetKernelArg-9");
             checkErr(ret,"clSetKernelArg");
 
             /* Execute OpenCL Kernel */
