@@ -48,19 +48,16 @@ kernel void gemm_nn20W (const int M, const int N, const int K, const float ALPHA
 {
   int i, j, k;
   half A_PART;
-  int wK = K/32;    // 1/32
-  int wlda = lda/32;    // 1/32
+  int wK = K/16;
+  int wlda = lda/16;
   for (i = 0; i < M; ++i) {
     for (j = 0; j < N; ++j) {
       half Cn;
       for (k = 0, Cn = C[ i*ldc + j ];k < wK; ++k) {
         float16 Ax1= vload_half16(( i*wlda + k + 0), A);
-        float16 Ax2= vload_half16(( i*wlda + k +16), A);
         float16 Bx1= vload_half16(( j*wlda + k + 0), B);
-        float16 Bx2= vload_half16(( j*wlda + k +16), B);
         float16 Cx1= Bx1 * Ax1;
-        float16 Cx2= Bx2 * Ax2;
-        Cn+= sum16(Cx1) + sum16(Cx2);
+        Cn+= sum16(Cx1);
       }
       C[ i*ldc + j ] = Cn;
     }
