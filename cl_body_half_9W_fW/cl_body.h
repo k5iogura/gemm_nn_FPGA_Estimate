@@ -179,6 +179,22 @@ void find_CKQ(
         *kernel = cKernel(program,kernel_name);
 }
 
+void find_CnKQ(
+    const char *platform_name, const char *kernel_file, int n, const char *kernel_name[],
+    cl_context *context, cl_kernel kernel[], cl_command_queue *queue
+){
+    int i;
+    cl_device_id device_id = ocl_init(platform_name);
+    cl_program program=NULL;
+    if(device_id)
+        contextQ(device_id, context, queue);
+    if(*context)
+        program = cProgram(kernel_file,*context,device_id);
+    if(program)
+        for(i=0;i<n;i++)
+            kernel[i] = cKernel(program,kernel_name[i]);
+}
+
 cl_kernel find_platform(char *name){
     cl_context context;
     cl_command_queue queue;
