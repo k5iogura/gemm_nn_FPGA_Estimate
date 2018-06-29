@@ -6,7 +6,7 @@ LFLAG := $(shell aocl link-config) $(shell pkg-config --libs IlmBase)
 all:environment $(TGT) gemm1.aocx
 
 $(TGT):clx.cpp
-	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU -Ofast
+	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU -g
 
 %.aocx:%.cl
 	aoc -march=emulator -g -v -report $^ -o $(@)
