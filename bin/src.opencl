@@ -1,13 +1,13 @@
 #!/bin/bash
 if [ -z $QUARTUS_ROOTDIR ];then
-    export QUARTUS_ROOTDIR=/tools/intelFPGA/18.0/quartus
+    export QUARTUS_ROOTDIR=/opt/intelFPGA/18.0/quartus
 fi
 if [ -z $ALTERAOCLSDKROOT ];then
-    export ALTERAOCLSDKROOT=/tools/intelFPGA/18.0/hld
+    export ALTERAOCLSDKROOT=/opt/intelFPGA/18.0/hld
 fi
 if [ -z $QUARTUS_64BIT ];then
     export QUARTUS_64BIT=1
-    export PATH=$PATH:$QUARTUS_ROOTDIR/bin:/tools/intelFPGA/18.0/embedded/ds-5/bin:/opt/intelFPGA/18.0/embedded/ds-5/sw/gcc/bin:$ALTERAOCLSDKROOT/bin:$ALTERAOCLSDKROOT/linux64/bin:
+    export PATH=$PATH:$QUARTUS_ROOTDIR/bin:/opt/intelFPGA/18.0/embedded/ds-5/bin:/opt/intelFPGA/18.0/embedded/ds-5/sw/gcc/bin:$ALTERAOCLSDKROOT/bin:$ALTERAOCLSDKROOT/linux64/bin:
     export LD_LIBRARY_PATH=$ALTERAOCLSDKROOT/linux64/lib
     #export LM_LICENSE_FILE=/home/ogura/Licese.dat
 fi
