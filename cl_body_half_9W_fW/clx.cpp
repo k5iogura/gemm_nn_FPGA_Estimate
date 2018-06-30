@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <OpenEXR/half.h>
+#include "fp16.h"
+//#include <OpenEXR/half.h>
 
 #include <CL/cl.h>
 #include "cl_body.h"
@@ -20,7 +21,7 @@ double clock_realmsec(){
 	return (ts.tv_sec+ts.tv_nsec*1e-9)*1000.;
 }
 
-void row2col_major(int N, int K, half *in_b, half *B){
+void row2col_major(int N, int K, fp16 *in_b, fp16 *B){
     int i,j,k;
     int m,n;
     for(k=0;k<K;k++)
@@ -31,7 +32,7 @@ void row2col_major(int N, int K, half *in_b, half *B){
         }
 }
 
-void col2row_major(int N, int K, half *in_b, half *B){
+void col2row_major(int N, int K, fp16 *in_b, fp16 *B){
     int i,j,k;
     int m,n;
     for(j=0;j<N;j++)
@@ -117,14 +118,17 @@ void run(){
 
         printf("M/N/K = %d\t%d\t%d:\t",M,N,K);
 
-        half *A,*B,*C,*b;
-        A=(half*)malloc(sizeof(half)*M*K);
-        B=(half*)malloc(sizeof(half)*K*N);
-        C=(half*)malloc(sizeof(half)*M*N);
-        b=(half*)malloc(sizeof(half)*K*N);
-        for(int x=0;x<M*K;x++)A[x]=1.0;
-        for(int x=0;x<K*N;x++)B[x]=1.0;
-        for(int x=0;x<M*N;x++)C[x]=0.0;
+        fp16 *A,*B,*C,*b;
+        A=(fp16*)malloc(sizeof(fp16)*M*K);
+        B=(fp16*)malloc(sizeof(fp16)*K*N);
+        C=(fp16*)malloc(sizeof(fp16)*M*N);
+        b=(fp16*)malloc(sizeof(fp16)*K*N);
+        for(int x=0;x<M*K;x++)A[x]=f2h(0.1);
+        for(int x=0;x<K*N;x++)B[x]=f2h(1.0);
+        for(int x=0;x<M*N;x++)C[x]=f2h(0.0);
+        //for(int x=0;x<M*K;x++)A[x]=0.1;
+        //for(int x=0;x<K*N;x++)B[x]=1.0;
+        //for(int x=0;x<M*N;x++)C[x]=0.0;
         if(!(K%27)) kernel = kernels[0];
         else kernel = kernels[1];
         const int nloop=1;
@@ -171,7 +175,8 @@ void run(){
             ret = clReleaseMemObject (memobjB);
             ret = clReleaseMemObject (memobjC);
             for(int y=0;y<3;y++){
-                float Cf = C[y];
+                float Cf = h2f(C[y]);
+                //float Cf = C[y];
                 printf("%f[%d]\t",Cf,y);
             }
             printf("\n");

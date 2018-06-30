@@ -5,7 +5,7 @@ LFLAG := $(shell aocl link-config) $(shell pkg-config --libs IlmBase)
 
 all:environment $(TGT) gemm1.aocx
 
-$(TGT):clx.cpp
+$(TGT):clx.cpp fp16.cpp
 	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU -Ofast
 
 %.aocx:%.cl
