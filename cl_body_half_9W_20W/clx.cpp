@@ -122,7 +122,7 @@ void run(){
         B=(half*)malloc(sizeof(half)*K*N);
         C=(half*)malloc(sizeof(half)*M*N);
         b=(half*)malloc(sizeof(half)*K*N);
-        for(int x=0;x<M*K;x++)A[x]=1.0;
+        for(int x=0;x<M*K;x++)A[x]=0.1;
         for(int x=0;x<K*N;x++)B[x]=1.0;
         for(int x=0;x<M*N;x++)C[x]=0.0;
         if(!(K%27)) kernel = kernels[0];
