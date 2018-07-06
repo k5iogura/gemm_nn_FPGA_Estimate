@@ -1,0 +1,20 @@
+TGT   := clx_intel
+
+CC    := g++
+
+all:$(TGT)
+
+CFLAG := -Ofast -DonX86
+
+CFLAG += -I/usr/local/cuda/include
+LFLAG := -I/usr/local/cuda/lib64
+
+$(TGT):gemm1.o
+	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm $(CFLAG)
+
+%.o:%.cpp
+	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL $(CFLAGS)
+
+clean:
+	rm -rf *.o $(TGT)
+
