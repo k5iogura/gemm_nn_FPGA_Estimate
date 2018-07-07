@@ -98,7 +98,7 @@ void run(){
             clEnqueueReadBuffer(command_queue[1], memobjC, CL_TRUE, 0, K * sizeof(cl_half), (void*)C, 0, NULL, NULL);
 
             end = clock_realmsec();
-            printf(":\treal time = %12.6f msec\t:",(end-start));
+            printf(":\treal time = %8.3f msec\t:",(end-start));
             for(i=0,j=0;i<M;i++)
                 if(B[i] != A[i]){
                     printf("diff->B[%d] = %d ",i,B[i]);
@@ -108,7 +108,7 @@ void run(){
             ret = clReleaseMemObject (memobjA);
             ret = clReleaseMemObject (memobjB);
             ret = clReleaseMemObject (memobjC);
-            printf("%d matched\n",j);
+            printf("%d match %6.3fMBPS\n",j,1.0*M/(1000.*(end-start)));
         }
         free(A);
         free(B);

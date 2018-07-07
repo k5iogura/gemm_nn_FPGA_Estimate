@@ -1,6 +1,6 @@
 DEBUG := 0
 
-TGT   := clx_fpga
+TGT   := memcp_fpga
 
 CC    := arm-linux-gnueabihf-g++
 CFLAG := $(shell aocl compile-config)
@@ -20,7 +20,7 @@ endif
 
 all:environment $(TGT)
 
-$(TGT):clx.o
+$(TGT):memcp.o
 	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm
 
 %.o:%.cpp
@@ -28,10 +28,10 @@ $(TGT):clx.o
 
 %.aocx:%.cl
 	aoc -g -v -report $^ -o $@
-	mv $@ gemm1_fpga.aocx
+	mv $@ memcp_fpga.aocx
 
 clean:
-	rm -rf *.o $(TGT)
+	rm -rf *.o $(TGT) *.aoco
 
 environment:
 	@echo check environment
