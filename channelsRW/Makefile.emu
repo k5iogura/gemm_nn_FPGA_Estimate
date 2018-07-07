@@ -1,0 +1,23 @@
+TGT := memcp_emu
+
+#CFLAG := $(shell aocl compile-config) $(shell pkg-config --cflags IlmBase)
+#LFLAG := $(shell aocl link-config) $(shell pkg-config --libs IlmBase)
+CFLAG = $(shell aocl compile-config)
+LFLAG = $(shell aocl link-config)
+
+all:environment $(TGT) memcp.aocx
+
+$(TGT):memcp.cpp
+	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU -Ofast
+
+%.aocx:%.cl
+	aoc -march=emulator -g -v -report $^ -o $(@)
+	mv $(@) memcp_emu.aocx
+
+clean:
+	rm -rf $(TGT) memcp_emu.aocx *.aoco *.o
+
+environment:
+	@echo check environment
+	@echo AOCL_BOARD_PACKAGE_ROOT $(AOCL_BOARD_PACKAGE_ROOT)
+	@echo BOARD $(BOARD)
