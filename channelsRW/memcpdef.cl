@@ -1,7 +1,11 @@
 #pragma OPENCL EXTENSION cl_altera_channels : enable
 #pragma OPENCL EXTENSION cl_intel_channels : enable
-#define WRD (16)
-#define TYPE float16
+#define WRD (32)
+#define TYPE floatArray
+typedef struct {
+    float s[WRD];
+} floatArray;
+
 channel TYPE CHIN __attribute__((depth(0)));
 kernel 
 void mem_read(const int N, global TYPE *restrict src){
