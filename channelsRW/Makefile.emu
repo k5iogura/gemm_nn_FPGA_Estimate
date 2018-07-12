@@ -5,7 +5,7 @@ TGT := memcp_emu
 CFLAG = $(shell aocl compile-config)
 LFLAG = $(shell aocl link-config)
 
-all:environment $(TGT) memcp.aocx
+all:environment $(TGT) sr36.aocx
 
 $(TGT):memcp.cpp
 	g++ $^ $(CFLAG) $(LFLAG) -o $@ -DonEMU -Ofast
