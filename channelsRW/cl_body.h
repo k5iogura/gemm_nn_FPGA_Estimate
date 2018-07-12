@@ -154,7 +154,7 @@ cl_program cProgram(const char*fileName, cl_context context, cl_device_id device
 
     cl_kernel kernels[MAX_ENV];
     cl_uint   n_kernels;
-    ret = clCreateKernelsInProgram(program,2,kernels,&n_kernels);
+    ret = clCreateKernelsInProgram(program,MAX_ENV,kernels,&n_kernels);
     checkErr(ret,"clCreateKernelsInProgram");
 
     char name[64];
