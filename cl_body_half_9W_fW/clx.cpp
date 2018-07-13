@@ -79,7 +79,7 @@ void run(){
         &context, kernels, &command_queue
     );
 #else
-    const char *k_name[2]={"gemm_nn1bW","gemm_nn20W"};
+    const char *k_name[2]={"gemm_nn9W","gemm_nnfW"};
     cl_kernel kernels[2];
     find_CnKQ(
         "Intel(R) FPGA SDK for OpenCL(TM)",
@@ -103,13 +103,21 @@ void run(){
     struct caseP{
          int M,N,K;
     }caseP[10];
-    caseP[0].M=16;	caseP[0].N=35840;	caseP[0].K=27;
+    /*caseP[0].M=16;	caseP[0].N=35840;	caseP[0].K=27;
     caseP[1].M=32;	caseP[1].N=8960 ;	caseP[1].K=144;
     caseP[2].M=128;	caseP[2].N=560;		caseP[2].K=288;
     caseP[3].M=512;	caseP[3].N=35;		caseP[3].K=1152;
     caseP[4].M=512;	caseP[4].N=35;		caseP[4].K=4608;
     caseP[5].M=256;	caseP[5].N=35;		caseP[5].K=512;
     caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=2304;
+    caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;*/
+    caseP[0].M=16;	caseP[0].N=32*32;	caseP[0].K=3*3*3;   //  27
+    caseP[1].M=32;	caseP[1].N=16*16 ;	caseP[1].K=3*3*16;  // 144
+    caseP[2].M=128;	caseP[2].N=8*8;		caseP[2].K=3*3*32;  // 228
+    caseP[3].M=512;	caseP[3].N=4*4;		caseP[3].K=3*3*128; //1152
+    caseP[4].M=512;	caseP[4].N=2*2;		caseP[4].K=3*3*512; //4608
+    caseP[5].M=256;	caseP[5].N=1;		caseP[5].K=1*1*512; // 512
+    caseP[6].M=512;	caseP[6].N=35;		caseP[6].K=3*3*256; //2304
     caseP[7].M=125;	caseP[7].N=35;		caseP[7].K=512;
     for(int casei=0;casei<caseN;casei++){
         int M=caseP[casei].M;

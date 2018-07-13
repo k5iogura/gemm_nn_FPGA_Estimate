@@ -20,7 +20,7 @@ endif
 
 all:environment $(TGT)
 
-$(TGT):clx.o
+$(TGT):clx.o fp16.o
 	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm
 
 %.o:%.cpp
