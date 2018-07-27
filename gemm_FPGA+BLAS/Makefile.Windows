@@ -1,0 +1,14 @@
+ALIGNED?= -DMALLOC
+SRC=gemm1.cpp
+OBJ=gemm1.o
+
+APP=gemm1.x86
+
+$(APP):$(OBJ)
+	g++ $^ -o $@ -LC:/Program\ Files\ \(x86\)/Intel/OpenCL\ SDK/6.3/lib/x64 -lOpenCL
+%.o:%.cpp
+	g++ -c $^ -IC:/Program\ Files\ \(x86\)/Intel/OpenCL\ SDK/6.3/include -o $@ $(ALIGNED) -DonX86 -Wno-deprecated-declarations
+
+clean:
+	rm -f *.o $(APP)
+

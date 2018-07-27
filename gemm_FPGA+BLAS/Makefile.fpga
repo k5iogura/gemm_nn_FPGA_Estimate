@@ -1,0 +1,41 @@
+DEBUG := 0
+
+TGT   := clx_fpga
+
+CC    := arm-linux-gnueabihf-g++
+CFLAG := $(shell aocl compile-config)
+LFLAG := $(shell aocl link-config)
+EFFORT:= -fast-compile
+EFFORT:= 
+
+CFLAG += -I/home/20076433/gemm_nn_fpga_estimate_emu/usr/include/
+LFLAG += -pthread -L/home/20076433/gemm_nn_fpga_estimate_emu/usr/lib/arm-linux-gnueabihf -lImath -lHalf -lIex -lIlmThread
+#LFLAG += -pthread -L/home/20076433/gemm_nn_fpga_estimate_emu/usr/lib/arm-linux-gnueabihf -lImath -lHalf -lIex -lIexMath -lIlmThread
+
+ifeq ($(DEBUG),1)
+CFLAG += -g -pg
+else
+CFLAG += -Ofast
+endif
+
+all:environment $(TGT)
+
+$(TGT):clx.o fp16.o
+	$(CC) $^ $(CFLAG) $(LFLAG) -o $@ -lOpenCL -lrt -lm
+
+%.o:%.cpp
+	$(CC) -c $^ -o $@ $(CFLAG) $(LFLAG) -lOpenCL
+
+%.aocx:%.cl
+	aoc -g -v -report $^ -o $@
+	mv $@ gemm1_fpga.aocx
+
+clean:
+	rm -rf *.o $(TGT)
+
+environment:
+	@echo check environment
+	@echo AOCL_BOARD_PACKAGE_ROOT $(AOCL_BOARD_PACKAGE_ROOT)
+	@echo BOARD $(BOARD)
+	@if [ -z $(CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA) ];then echo IN FPGA MODE;fi
+
